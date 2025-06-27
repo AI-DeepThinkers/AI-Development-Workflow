@@ -76,10 +76,3 @@ This document outlines the critical thinking, ethical considerations, and develo
 6. **Deployment** – Integrate with hospital systems e.g., FastAPI for inference.
 
 ---
-
-## Notes
-
-- This file focuses on the **thinking process**, not the implementation.
-- See `notebooks/` or `models/` folders for training code and evaluation.
-
----
