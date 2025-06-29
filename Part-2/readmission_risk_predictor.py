@@ -29,11 +29,12 @@ import numpy as np
 from sklearn.preprocessing import StandardScaler, LabelEncoder
 
 def preprocess_data(df):
-    df = df.dropna()
-    categorical_cols = ['gender', 'race']
-    le = LabelEncoder()
-    for col in categorical_cols:
-        df[col] = le.fit_transform(df[col])
+    # Impute missing values for numerical columns
+    for col in ['age', 'blood_pressure', 'cholesterol']:
+        df[col] = df[col].fillna(df[col].median())
+    # One-hot encode categorical variables
+    df = pd.get_dummies(df, columns=['gender', 'race'])
+    # Normalize numerical features
     scaler = StandardScaler()
     df[['age', 'blood_pressure', 'cholesterol']] = scaler.fit_transform(df[['age', 'blood_pressure', 'cholesterol']])
     return df
@@ -60,10 +61,10 @@ data = pd.DataFrame({
 data = preprocess_data(data)
 X = data.drop('readmitted', axis=1)
 y = data['readmitted']
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
 
 # Train model
-model = RandomForestClassifier()
+model = RandomForestClassifier(random_state=42)
 model.fit(X_train, y_train)
 y_pred = model.predict(X_test)
 
@@ -71,10 +72,15 @@ y_pred = model.predict(X_test)
 cm = confusion_matrix(y_test, y_pred)
 precision = precision_score(y_test, y_pred)
 recall = recall_score(y_test, y_pred)
+from sklearn.metrics import f1_score, roc_auc_score
+f1 = f1_score(y_test, y_pred)
+roc_auc = roc_auc_score(y_test, y_pred)
 
 print("Confusion Matrix:\n", cm)
 print("Precision:", precision)
 print("Recall:", recall)
+print("F1 Score:", f1)
+print("ROC-AUC:", roc_auc)
 
 # ------------------------------
 # 4. Deployment
@@ -88,6 +94,15 @@ print("Recall:", recall)
 # - Ensure encryption of data at rest and in transit
 # - Regular audits for HIPAA compliance
 # - Role-based access to sensitive patient data
+
+# Deployment Example (comment):
+# from flask import Flask, request, jsonify
+# app = Flask(__name__)
+# @app.route('/predict', methods=['POST'])
+# def predict():
+#     data = request.get_json()
+#     # preprocess and predict
+#     return jsonify({'readmission_risk': int(model.predict([data])[0])})
 
 # ------------------------------
 # 5. Optimization (Overfitting)
