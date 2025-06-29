@@ -1,78 +1,95 @@
-# AI-Development-Workflow
+# AI Development Workflow Assignment
 
+## Project Overview
+This project demonstrates the application of the AI Development Workflow to real-world problems, including fraud detection in mobile money and hospital patient readmission prediction. The workflow covers problem definition, data strategy, model development, evaluation, deployment, and critical analysis of ethical and practical challenges.
 
---------------------------------------
+---
 
-# AI Ethics, Bias & Workflow – Hospital Readmission Prediction
+## Part 1: Short Answer Questions (Fraud Detection)
+- **Problem:** Detect fraudulent transactions in mobile money platforms.
+- **Objectives:**
+  - Identify suspicious transaction patterns in real time.
+  - Minimize financial loss caused by fraud.
+  - Improve user trust and platform security.
+- **Stakeholders:** Mobile money service providers, end users.
+- **KPI:** Fraud Detection Precision.
+- **Data Sources:** Transaction logs, user profiles.
+- **Bias:** Behavioral bias in underrepresented user groups.
+- **Preprocessing:** Handle missing values, normalize amounts, encode categoricals.
+- **Model:** Random Forest (robust, interpretable).
+- **Evaluation:** Precision, recall; monitor concept drift; address latency/scalability in deployment.
 
-This document outlines the critical thinking, ethical considerations, and development workflow of an AI system designed to predict hospital patient readmission within 30 days.
+---
+
+## Part 2: Case Study Application (Hospital Readmission)
+- **Problem:** Predict patient readmission risk within 30 days of discharge.
+- **Objectives:** Reduce readmission rates, improve outcomes.
+- **Stakeholders:** Hospital staff, patients, administrators, insurers.
+- **Data Strategy:**
+  - EHRs, demographics, admission/discharge summaries.
+  - Ethical concerns: patient privacy, bias/fairness.
+  - Preprocessing: Impute missing values, normalize, one-hot encode, feature engineering.
+- **Model:** Gradient Boosting or Random Forest (with justification).
+- **Evaluation:** Confusion matrix, precision, recall, F1, ROC-AUC.
+- **Deployment:** API integration, compliance (HIPAA), access controls.
+- **Optimization:** Cross-validation, regularization to prevent overfitting.
 
 ---
 
 ## Part 3: Critical Thinking
-
-### Ethics & Bias
-
-- **Biased Training Data Effects:**
-  - Underrepresentation of minority groups can result in poor predictions for those patients.
-  - May lead to delayed care, misallocated resources, or overlooked high-risk cases.
-
-- **Mitigation Strategy:**
-  - Perform fairness audits (evaluate model across age, race, gender groups).
-  - Use techniques like reweighting or stratified sampling to ensure balanced representation.
-  - Involve clinicians in reviewing model outputs to catch real-world implications.
+- **Ethics & Bias:**
+  - Biased data can worsen disparities and lead to suboptimal care for underrepresented groups.
+  - Mitigation: Collect diverse data, use fairness-aware techniques, monitor with fairness metrics (e.g., demographic parity).
+- **Trade-offs:**
+  - Interpretability vs. accuracy: Simpler models are more transparent but may be less accurate; complex models may be less explainable.
+  - Computational constraints: Limited resources may require lightweight models or model compression.
 
 ---
 
-### Trade-offs: Accuracy vs Interpretability
-
-- **Interpretability:**
-  - Essential in healthcare to build trust.
-  - Enables clinicians to understand and validate predictions.
-  - Easier to comply with healthcare regulations and ensure accountability.
-
-- **Accuracy:**
-  - More complex models (e.g., ensemble methods) may capture hidden patterns.
-  - However, these models are often black boxes and hard to explain.
-
-- **Best Practice:**
-  - Use explainable models (e.g., Random Forest + SHAP values) to balance performance and transparency.
+## Part 4: Reflection & Workflow Diagram
+- **Reflection:**
+  - Most challenging: Balancing fairness, interpretability, and accuracy with limited data and strict privacy requirements.
+  - Improvements: More data, stakeholder input, advanced techniques, and explainability tools.
+- **Workflow Diagram:**
+  - See below for the AI Development Workflow stages.
 
 ---
 
-### Computational Constraints
-
-- If the hospital lacks powerful infrastructure:
-  - Avoid deep learning or large ensemble models.
-  - Prefer lighter models like logistic regression, decision trees, or pruned random forests.
-  - Consider using cloud-based inference if privacy and bandwidth permit.
-
----
-
-## Part 4: Reflection & Workflow
-
-### Reflection
-
-- **Most Challenging Stage:**
-  - Balancing fairness and performance was the hardest.
-  - Healthcare data is sensitive and messy, and addressing ethical concerns adds complexity.
-
-- **Improvements with More Resources:**
-  - Collect more diverse patient data and include social factors (e.g., income, support system).
-  - Apply model explainability tools (e.g., SHAP, LIME).
-  - Collaborate closely with medical staff for validation.
+## AI Development Workflow Diagram
+1. **Problem Definition** – Define prediction goal and stakeholders.
+2. **Data Collection** – Gather EHRs, demographics, historical data.
+3. **Data Preprocessing & Feature Engineering** – Clean data, extract features, handle missing values.
+4. **Model Selection & Training** – Choose model based on needs and constraints.
+5. **Evaluation** – Use metrics like precision, recall, fairness.
+6. **Deployment** – Integrate with hospital systems (e.g., via API).
 
 ---
 
-## AI Development Workflow
-
-**Workflow Stages:**
-
-1. **Problem Definition** – Define prediction goal and identify key stakeholders.
-2. **Data Collection** – Gather EHRs, demographics, and historical readmission data.
-3. **Data Preprocessing & Feature Engineering** – Clean data, extract clinical features, and handle missing values.
-4. **Model Selection & Training** – Choose model based on interpretability and resource limits.
-5. **Evaluation** – Use metrics like precision, recall, and fairness scores.
-6. **Deployment** – Integrate with hospital systems e.g., FastAPI for inference.
+## Running the Code
+1. Create and activate a virtual environment:
+   ```bash
+   python -m venv venv
+   venv\Scripts\activate  # On Windows
+   # or
+   source venv/bin/activate  # On Mac/Linux
+   ```
+2. Install requirements:
+   ```bash
+   pip install -r requirements.txt
+   ```
+3. Run the script:
+   ```bash
+   python Park-2/readmission_risk_predictor.py
+   ```
+4. (Optional) Use Jupyter Notebook for interactive exploration:
+   ```bash
+   pip install notebook
+   jupyter notebook
+   ```
 
 ---
+
+## References
+- CRISP-DM Framework
+- Fairness in Machine Learning (AIF360, Fairlearn)
+- Healthcare AI Ethics Guidelines
